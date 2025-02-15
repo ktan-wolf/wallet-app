@@ -1,10 +1,12 @@
 "use client"
 import { Button } from "@repo/ui/button";
 import { Card } from "@repo/ui/card";
+import db from "@repo/db/client";
 import { Select } from "@repo/ui/select";
 import { useState } from "react";
 import { TextInput } from "@repo/ui/textinput";
 import { createOnRampTransaction } from "../app/lib/actions/createOnrampTransaction";
+import axios from "axios";
 
 const SUPPORTED_BANKS = [{
     name: "HDFC Bank",
@@ -35,7 +37,12 @@ export const AddMoney = () => {
         }))} />
         <div className="flex justify-center pt-4">
             <Button onClick={async () => {
-                await createOnRampTransaction(provider, value)
+                const data = await createOnRampTransaction(provider, value)
+                await axios.post("http://localhost:3003/hdfcWebhook", {
+                    token : data.token,
+                    user_identifier : data.userId,
+                    amount : data.amount
+                })
                 window.location.href = redirectUrl || "";
             }}>
             Add Money

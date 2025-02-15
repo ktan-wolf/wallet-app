@@ -25,6 +25,9 @@ export async function createOnRampTransaction(provider: string, amount: number) 
     });
 
     return {
-        message: "Done"
-    }
+        message: "Done" , 
+        token : token , 
+        userId : Number(session?.user?.id),
+        amount: amount * 100
+    } 
 }
