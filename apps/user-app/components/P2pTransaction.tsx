@@ -1,14 +1,19 @@
 import { Card } from "@repo/ui/card"
+import { getServerSession } from "next-auth";
+import { authOptions } from "../app/lib/auth";
+import prisma from "@repo/db/client";
 
-export const OnRampTransactions = ({
+
+export const P2pTransaction = ({
     transactions
 }: {
     transactions: {
         time: Date,
         amount: number,
         // TODO: Can the type of `status` be more specific?
-        status: string,
-        provider: string
+        toUser: number,
+        fromUser: number,
+        fromUserName : string
     }[]
 }) => {
     if (!transactions.length) {
@@ -18,6 +23,7 @@ export const OnRampTransactions = ({
             </div>
         </Card>
     }
+    
     return <Card title="Recent Transactions">
         <div className="pt-2">
             {transactions.map(t => <div className="flex justify-between">
@@ -29,7 +35,7 @@ export const OnRampTransactions = ({
                         {t.time.toDateString()}
                     </div>
                     <div className="text-slate-600 text-xs">
-                        From : {t.provider}
+                        From : {t.fromUserName}
                     </div>
                 </div>
                 <div className="flex flex-col justify-center">
