@@ -1,8 +1,4 @@
 import { Card } from "@repo/ui/card"
-import { getServerSession } from "next-auth";
-import { authOptions } from "../app/lib/auth";
-import prisma from "@repo/db/client";
-
 
 export const P2pTransaction = ({
     transactions
@@ -27,7 +23,7 @@ export const P2pTransaction = ({
     return <Card title="Recent Transactions">
         <div className="pt-2">
             {transactions.map(t => <div className="flex justify-between">
-                <div>
+                <div className="border-b border-gray-400">
                     <div className="text-sm">
                         Received INR
                     </div>
@@ -37,12 +33,12 @@ export const P2pTransaction = ({
                     <div className="text-slate-600 text-xs">
                         From : {t.fromUserName}
                     </div>
+                    </div>
+                    <div className="flex flex-col justify-center border-b border-gray-400">
+                        + Rs {t.amount / 100}
+                    </div>
                 </div>
-                <div className="flex flex-col justify-center">
-                    + Rs {t.amount / 100}
-                </div>
-
-            </div>)}
+            )}
         </div>
     </Card>
 }

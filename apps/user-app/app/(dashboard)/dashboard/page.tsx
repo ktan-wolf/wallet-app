@@ -55,7 +55,7 @@ export default function() {
     ];
 
     return (
-        <div className="relative min-h-fit w-full">
+        <div className="relative min-h-fit w-full bg-blue-500">
             <BackgroundAnimation />
             
             <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-white/80 to-transparent backdrop-blur-sm" />
